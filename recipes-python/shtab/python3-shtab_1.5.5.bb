@@ -12,11 +12,13 @@
 inherit dpkg
 
 SRC_URI = " \
-    https://github.com/iterative/shtab/archive/refs/tags/v1.4.2.tar.gz;downloadfilename=${PN}-${PV}.tar.gz \
-    file://0001-Lower-requirements-on-setuptools.patch \
+    https://github.com/iterative/shtab/archive/refs/tags/v1.5.5.tar.gz;downloadfilename=${PN}-${PV}.tar.gz \
     file://rules \
     "
-SRC_URI[sha256sum] = "5e6ef745c223ef1a01a2db491a8ec5c02c8291067328b17695c9a44f5b7d6fe6"
+# modify for debian buster build
+SRC_URI_append_buster = " file://0001-Lower-requirements-on-setuptools.patch"
+
+SRC_URI[sha256sum] = "b8183c7ee95f28d2f9e17bbe040d5e58070e272f8a0db2f8a601917da8cf8e26"
 
 S = "${WORKDIR}/shtab-${PV}"
 
@@ -26,6 +28,8 @@ DEBIAN_BUILD_DEPENDS = " \
     python3-all-dev:any, \
     python3-setuptools, \
     python3-setuptools-scm:native, \
+    python3-wheel:native, \
+    python3-toml:native, \
     "
 
 DEB_BUILD_PROFILES = "nocheck"
