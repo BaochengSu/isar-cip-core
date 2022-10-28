@@ -25,6 +25,10 @@ repos:
     refspec: fc4f004eb67237d9d09b1ffad0de1a19217fa94a
     layers:
       meta:
+    patches:
+      fix-reproducible-issues:
+        repo: cip-core
+        path: patches/isar/set-rootfs-timestamps-reproducible-2.patch
 
 bblayers_conf_header:
   standard: |
@@ -33,6 +37,9 @@ bblayers_conf_header:
 local_conf_header:
   standard: |
     CONF_VERSION = "1"
+  reproducible_builds:
+    SOURCE_DATE_EPOCH = "1666187059"
+    KBUILD_BUILD_TIMESTAMP = "1666187059"
   cross: |
     ISAR_CROSS_COMPILE = "1"
   root_password: |

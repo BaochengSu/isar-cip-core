@@ -1,0 +1,21 @@
+diff --git a/meta/classes/image.bbclass b/meta/classes/image.bbclass
+index ccff810..8bbc266 100644
+--- a/meta/classes/image.bbclass
++++ b/meta/classes/image.bbclass
+@@ -432,6 +432,16 @@ do_rootfs_finalize() {
+ 
+         rm -f "${ROOTFSDIR}/etc/apt/sources-list"
+ EOSUDO
++
++    # Set the timestamp inside the image
++    bbwarn "set the timestamp: ${SOURCE_DATE_EPOCH}"
++    if [ -n "${SOURCE_DATE_EPOCH}" ]; then
++    	bbwarn "find and set the timestamp inside the image"
++        sudo find ${ROOTFSDIR} -newermt \
++            "$(date -d@${SOURCE_DATE_EPOCH} '+%Y-%m-%d %H:%M:%S')" \
++            -printf "%y %p\n" \
++            -exec touch '{}' -h -d@${SOURCE_DATE_EPOCH} ';'
++    fi
+ }
+ addtask rootfs_finalize before do_rootfs after do_rootfs_postprocess
+ 
