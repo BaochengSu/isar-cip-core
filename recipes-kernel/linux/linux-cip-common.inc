@@ -17,6 +17,7 @@ require recipes-kernel/linux/linux-custom.inc
 
 SRC_URI += " \
     https://git.kernel.org/pub/scm/linux/kernel/git/cip/linux-cip.git/snapshot/linux-cip-${PV}.tar.gz \
+    file://bbb-secure-boot.cfg \
     "
 
 SRC_URI:append = " ${@ "git://gitlab.com/cip-project/cip-kernel/cip-kernel-config.git;protocol=https;branch=master;destsuffix=cip-kernel-config;name=cip-kernel-config" \
@@ -26,3 +27,7 @@ SRC_URI:append = " ${@ "git://gitlab.com/cip-project/cip-kernel/cip-kernel-confi
 SRCREV_cip-kernel-config ?= "ce52837418aea714e780e0cbc8afb9515c12cc1b"
 
 S = "${WORKDIR}/linux-cip-${PV}"
+
+do_prepare_build:prepend() {
+    cat ${WORKDIR}/bbb-secure-boot.cfg >> ${WORKDIR}/${KERNEL_DEFCONFIG}
+}
