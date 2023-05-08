@@ -15,4 +15,5 @@ INITRAMFS_INSTALL += " \
     initramfs-overlay-hook \
     "
 
+INITRAMFS_INSTALL:append:swupdate = " initramfs-squashfs-hook"
 INITRAMFS_INSTALL:append:encrypt-partitions = " initramfs-crypt-hook"
