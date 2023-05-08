@@ -22,7 +22,7 @@ SRCREV ="aa9edf070567fa5b3e942c270633a8feef49dad8"
 SRC_URI += "file://0001-d-rules-Add-option-for-suricatta_lua.patch"
 
 # deactivate signing and hardware compability for simple a/b rootfs update
-DEB_BUILD_PROFILES += "pkg.swupdate.nosigning"
+DEB_BUILD_PROFILES:append:no-signed-swu = "pkg.swupdate.nosigning"
 DEB_BUILD_PROFILES += "pkg.swupdate.nohwcompat"
 DEB_BUILD_PROFILES:append:suricatta-lua = "pkg.swupdate.suricattalua"
 
