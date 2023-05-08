@@ -17,4 +17,5 @@ DESCRIPTION = "CIP Core image"
 IMAGE_INSTALL += "customizations"
 
 CIP_IMAGE_OPTIONS ?= ""
+CIP_IMAGE_OPTIONS:append:swupdate = " swupdate.inc"
 require ${CIP_IMAGE_OPTIONS}
