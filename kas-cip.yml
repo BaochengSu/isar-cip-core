@@ -25,6 +25,11 @@ repos:
     refspec: f95f69d3b83cc28976ef81eeefb5ec5dd17e544f
     layers:
       meta:
+    patches:
+      rb-fix-vmlinux:
+         path: patches/reproducible/0001-linux-Pass-KAFLAGS-to-linux-custom-build-to-fix-non-.patch
+         repo: cip-core
+
 
 bblayers_conf_header:
   standard: |

@@ -1,0 +1,48 @@
+From 44b698ada725aed878e6d718d7d896705ac05998 Mon Sep 17 00:00:00 2001
+From: venkata pyla <venkata.pyla@toshiba-tsip.com>
+Date: Tue, 9 May 2023 09:45:21 +0530
+Subject: [PATCH] linux: Pass KAFLAGS to linux custom build to fix
+ non-reproducible issue
+
+Signed-off-by: venkata pyla <venkata.pyla@toshiba-tsip.com>
+---
+ meta/recipes-kernel/linux/files/debian/isar/build.tmpl | 2 +-
+ meta/recipes-kernel/linux/linux-custom.inc             | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/meta/recipes-kernel/linux/files/debian/isar/build.tmpl b/meta/recipes-kernel/linux/files/debian/isar/build.tmpl
+index e7e04791..906dc580 100644
+--- a/meta/recipes-kernel/linux/files/debian/isar/build.tmpl
++++ b/meta/recipes-kernel/linux/files/debian/isar/build.tmpl
+@@ -22,7 +22,7 @@ do_build() {
+     sed -i "s/@KR@/${KR}/g" ${S}/debian/control ${S}/debian/linux-image-${KERNEL_NAME_PROVIDED}.*
+ 
+     # Build the Linux kernel
+-    ${MAKE} O=${KERNEL_BUILD_DIR} ${PARALLEL_MAKE} KCFLAGS="${KCFLAGS}"
++    ${MAKE} O=${KERNEL_BUILD_DIR} ${PARALLEL_MAKE} KCFLAGS="${KCFLAGS}" KAFLAGS="${KAFLAGS}"
+ 
+     # Stop tracing
+     set +x
+diff --git a/meta/recipes-kernel/linux/linux-custom.inc b/meta/recipes-kernel/linux/linux-custom.inc
+index 42501342..1404ab0b 100644
+--- a/meta/recipes-kernel/linux/linux-custom.inc
++++ b/meta/recipes-kernel/linux/linux-custom.inc
+@@ -80,6 +80,7 @@ TEMPLATE_VARS += "                \
+     KERNEL_NAME_PROVIDED          \
+     KERNEL_CONFIG_FRAGMENTS       \
+     KCFLAGS                       \
++    KAFLAGS                       \
+     DISTRIBUTOR                   \
+ "
+ 
+@@ -88,6 +89,7 @@ inherit template
+ 
+ # Add custom cflags to the kernel build
+ KCFLAGS ?= "-fdebug-prefix-map=${CURDIR}=."
++KAFLAGS ?= "-fdebug-prefix-map=${CURDIR}=."
+ 
+ # Derive name of the kernel packages from the name of this recipe
+ KERNEL_NAME_PROVIDED ?= "${@ d.getVar('PN').partition('linux-')[2]}"
+-- 
+2.20.1
+
