@@ -26,6 +26,9 @@ DEB_BUILD_PROFILES:append:no-signed-swu = "pkg.swupdate.nosigning"
 DEB_BUILD_PROFILES:append:no-hw-compat = "pkg.swupdate.nohwcompat"
 DEB_BUILD_PROFILES:append:suricatta-lua = "pkg.swupdate.suricattalua"
 
+# Disable cross for arm and arm64 on bullseye
+ISAR_CROSS_COMPILE:bullseye = "0"
+
 # add cross build and deactivate testing for arm based builds
 DEB_BUILD_PROFILES += "cross nocheck"
 DEB_BUILD_PROFILES:append:bullseye = " pkg.swupdate.bpo"
