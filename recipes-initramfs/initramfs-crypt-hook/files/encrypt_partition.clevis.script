@@ -34,9 +34,10 @@ esac
 # load necessary kernel modules:
 modprobe tpm_tis
 modprobe tpm_crb
+# modprobe optee-ftpm
 
 # fixed tpm device or do we need to find it
-tpm_device=/dev/tpmrm0
+tpm_device=/dev/tpm0
 partition_sets="$PARTITIONS"
 create_file_system_cmd="$CREATE_FILE_SYSTEM_CMD"
 
@@ -75,8 +76,12 @@ reencrypt_existing_partition() {
 
 }
 
+/usr/sbin/tee-supplicant -d
+sleep 10
+
 if [ ! -e "$tpm_device" ]; then
-	panic "tpm device '$tpm_device' does not exists - cannot create a encrypted device!"
+	# ls /dev
+	panic "tpm device '$tpm_device' does not exists - cannot create a encrypted deviceXXXXXXX!"
 fi
 
 # clevis needs /dev/fd create it in the initramfs

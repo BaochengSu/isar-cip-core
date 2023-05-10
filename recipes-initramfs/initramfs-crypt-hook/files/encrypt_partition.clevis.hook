@@ -30,7 +30,9 @@ manual_add_modules tpm_tis
 manual_add_modules tpm_crb
 manual_add_modules dm_mod
 manual_add_modules dm_crypt
+# manual_add_modules optee-ftpm
 
+copy_exec /usr/sbin/tee-supplicant || hook_error "/usr/sbin/tee-supplicant not found"
 copy_exec /usr/bin/openssl || hook_error "/usr/bin/openssl not found"
 copy_exec /usr/sbin/mke2fs || hook_error "/usr/sbin/mke2fs not found"
 copy_exec /usr/bin/grep || hook_error "/usr/bin/grep not found"
